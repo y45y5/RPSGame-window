@@ -1,14 +1,19 @@
+import javax.swing.*;
 import java.util.Random;
 
 public class Game {
 
-    public void humanMove(Option humanOption, MainCanvas mainCanvas){
+    int winningStreak = 0;
+
+    public void humanMove(Option humanOption, JTextArea textArea){
         Option computer = computerMove();
         String status;
+
         if(computer.equals(humanOption)) status = "Tie!";
-        else if(checkWinner(computer, humanOption)) status = "You win!";
-        else status = "You lose!";
-        mainCanvas.setString(status, "Computer picked " + computer);
+        else if(checkWinner(computer, humanOption)) { status = "You win!"; winningStreak++; }
+        else { status = "You lose!"; winningStreak = 0; }
+
+        textArea.setText(status + "\n" + "Computer picked " + computer + "\nCurrent winning streak: " + winningStreak);
     }
 
     private Option computerMove(){
